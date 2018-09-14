@@ -1,47 +1,47 @@
-# Lesson 2
+* Lesson 2
 
-12.09.2018
+<2018-09-12 Wed>
 
-## Running ROS
+** Running ROS (with Docker)
 
-Assign host IP address to environment variable ([`fish`](https://fishshell.com)):
+Assign host IP address to environment variable ([[https://fishshell.com][fish]]):
 
-```
+#+BEGIN_SRC fish
 set -x HOSTNAME (ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
-```
+#+END_SRC
 
 Create bridge between a network socket with a TCP listener on port 6000 (the default port of the X window system) and the X window server on OS X host:
 
-```
+#+BEGIN_SRC fish
 socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\"
-```
+#+END_SRC
 
-Build and run ROS nodes with the [Docker Compose](https://docs.docker.com/compose/):
+Build and run ROS nodes with the [[https://docs.docker.com/compose/][Docker Compose]]:
 
-```
+#+BEGIN_SRC fish
 docker-compose up
-```
+#+END_SRC
 
-Connect to the docker container with `turtlesim`:
+Connect to the docker container with ~turtlesim~:
 
-```
+#+BEGIN_SRC fish
 docker exec -it lesson02_turtlesim_1 bash -c 'source /opt/ros/kinetic/setup.bash && bash'
-```
+#+END_SRC
 
 Drive the turtle around:
 
-```
+#+BEGIN_SRC 
 rosrun turtlesim turtle_teleop_key
-```
+#+END_SRC
 
 Publish messages to turtlesim telling it how to move. For example:
 
-```
+#+BEGIN_SRC 
 rostopic pub /turtle1/cmd_vel geometry_msgs/Twist -r 1 -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, -1.8]'
-```
+#+END_SRC
 
 Bring docker containers with ROS down:
 
-```
+#+BEGIN_SRC 
 docker-compose down
-```
+#+END_SRC
