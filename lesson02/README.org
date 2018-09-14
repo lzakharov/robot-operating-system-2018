@@ -45,3 +45,32 @@ Bring docker containers with ROS down:
 #+BEGIN_SRC 
 docker-compose down
 #+END_SRC
+
+** Dive into C++
+
+Preprocessing:
+
+#+BEGIN_SRC fish
+g++ -E square.cpp -o square_preprocessed.cpp
+g++ -E main.cpp -o main_preprocessed.cpp
+#+END_SRC
+
+Compilation:
+
+#+BEGIN_SRC fish
+g++ -c main.cpp
+g++ -c square.cpp
+#+END_SRC
+
+Linking:
+
+#+BEGIN_SRC fish
+g++ square.o main.o -o program
+#+END_SRC
+
+Execution:
+
+#+BEGIN_SRC fish
+./program
+#+END_SRC
+
