@@ -1,0 +1,65 @@
+* Lesson 4
+  <2018-10-03 Wed>
+
+** Theory
+   Catkin Workspace:
+   - Source Space
+   - Build Space
+   - Development (Devel) Space
+   - Install Space
+
+** Practice
+   Run docker container with ~roscore~ command:
+   #+BEGIN_SRC bash
+   docker run -it --rm \
+   -v ${PWD}/catkin_ws:/root/catkin_ws \
+   --name lesson04 \
+   osrf/ros:kinetic-desktop \
+   bash -c 'roscore'
+   #+END_SRC
+   
+   Create and build catkin workspace:
+   #+BEGIN_SRC bash
+   docker exec -it lesson04 bash -c 'source /opt/ros/kinetic/setup.bash && bash' 
+   mkdir -p ~/catkin_ws/src
+   cd ~/catkin_ws/
+   catkin_make
+   source ~/catkin_ws/devel/setup.bash
+   #+END_SRC
+   
+   Create the first package:
+   #+BEGIN_SRC bash
+   cd ~/catkin_ws/src
+   catkin_create_pkg first_pkg std_msgs rospy roscpp
+   #+END_SRC
+   
+   Add source files into ~/root/catkin_ws/src/first_pkg/src~ and
+   customize the ~CMakeLists.txt~.
+   
+   Build the ~first_pkg~ package:
+   #+BEGIN_SRC bash
+   cd ~/catkin_ws/
+   catkin_make
+   #+END_SRC
+   
+   Run the ~first_pkg~ package:
+   #+BEGIN_SRC bash
+   rosrun first_pkg hello
+   #+END_SRC
+   
+   *Commands for subsequent launches*:
+   #+BEGIN_SRC bash
+   docker exec -it lesson04 \
+   bash -c 'source /opt/ros/kinetic/setup.bash && source ~/catkin_ws/devel/setup.bash && bash'
+
+   rosrun [package_name] [node_name]
+   #+END_SRC
+   
+** Homework
+   Run a container with ~roscore~ command and:
+   #+BEGIN_SRC bash
+   docker exec -it lesson04 \
+   bash -c 'source /opt/ros/kinetic/setup.bash && source ~/catkin_ws/devel/setup.bash && bash'
+
+   rosrun timer_package timer_package_node
+   #+END_SRC
